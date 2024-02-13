@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Suhu</title>
+    
+</head>
+<body style="background-color:rgb(213, 208, 208);">
+
+<h1> Kalkulator Suhu </h1>
+<div id="introcelcius">
+    <span>Masukkan Suhu Celcius (°C) ke kotak dibawah, lalu klik tombol konversi</span><br> 
+    <span>untuk mendapatkan hasil konversi dalam bentuk Fahrenheit (°F)</span>  
+</div>  
+
+<div id="introfahrenheit" style="display:none">
+    <span>Masukkan Suhu Fahrenheit (°F) ke kotak dibawah, lalu klik tombol konversi</span><br> 
+    <span>untuk mendapatkan hasil konversi dalam bentuk Celcius (°C)</span>  
+</div> 
+
+<br>
+<br>
+<div id="nodecelsius">
+    <label for="celsius">Celcius(°C):</label><br>
+    <textarea id="celsius" name="celsius" rows="5" cols="50">   
+    </textarea> 
+</div>
+
+
+<br>
+<button onclick="perhitungan()" id="button_konversi" type="button">Konversi</button> 
+<button onclick="resetvalue()" id="button_reset" type="button">Reset</button> 
+<button onclick="swapDivs()" id="button_reverse" class="" type="button">Reverse</button> 
+
+<br><br>
+<div id="nodefahrenheit">
+<label for="w3review">Fahrenheit(°F):</label><br>
+<textarea id="result" name="result" rows="5" cols="50">   
+</textarea>
+</div>
+
+<br><br>
+<label for="carakalkulasi">Cara Kalulasi:</label><br>
+<textarea id="carakalkulasi" name="carakalkulasi" rows="5" cols="50">   
+</textarea>
+<br><br>
+
+<div id="footercelcius">
+<h3> Cara Konversi Dari Celcius (°C) ke Fahrenheit(°F)</h3>
+<span>-------------------------------------------------</span><br><br>
+
+<span>Suhu S dalam derajat Fahrenheit (°F) sama dengan suhu S dalam derajat</span>
+<br>
+<span>Celcius(°C) kali 9/5 tambah 32</span><br>
+<span>S(°F) = (S(°C) x 9/5) + 32</span><br>
+<span>atau</span><br>
+<span>S(°F) = (S(°C) x 1.8) + 32</span><br>
+</div>
+
+
+<div id="footerfahrenheit" style="display:none">
+    <h3> Cara Konversi Dari Fahrenheit(°F) ke Celcius (°C)</h3>
+    <span>-------------------------------------------------</span><br><br>
+    
+    <span>Suhu S dalam derajat Celcius (°C) sama dengan suhu S dalam derajat</span>
+    <br>
+    <span>Fahrenheit(°F) dikurangi 32 dikali 5/9</span><br>
+    <span>S(°C) = (S(°F) - 32) * 5/9</span><br>
+    </div>
+
+<script>
+    function convertToFahrenheit() {
+        var celsiusInput = document.getElementById("celsius").value;
+        var celsius = parseFloat(celsiusInput);
+        var fahrenheit = (celsius * 9/5) + 32;
+        displayResultFahrenheit(fahrenheit, "Fahrenheit");
+
+    }
+
+    function convertToCelcius() {
+        var fahrenheitInput = document.getElementById("result").value;
+        var fahrenheit = parseFloat(fahrenheitInput);
+        var celcius = (fahrenheit-32) * 5/9;
+        displayResultCelcius(celcius, "Celsius");
+    }
+
+    function displayResultFahrenheit(value, unit) {
+        var resultElement = document.getElementById("result");
+        resultElement.value = "Hasil konversi: " + value + " " + unit;
+        var resultrumus = document.getElementById("carakalkulasi");
+        var celsiusInput = document.getElementById("celsius").value;
+        resultrumus.value = "("+ celsiusInput + " (C) * 9/5) + 32 = " + value +"(F)";
+    }
+
+    function displayResultCelcius(value, unit) {
+        var resultElement = document.getElementById("celsius");
+        resultElement.value = "Hasil konversi: " + value + " " + unit;
+        var resultrumus = document.getElementById("carakalkulasi");
+        var fahrenheitInput = document.getElementById("result").value;
+        resultrumus.value = "("+ fahrenheitInput + " (F) - 32) * 5/9 = " + value +"(C)";
+    }
+
+    function resetvalue(){
+        var resultElement = document.getElementById("result");
+        var resultrumus = document.getElementById("carakalkulasi");
+        var celsiusInput = document.getElementById("celsius");
+        resultElement.value="";
+        resultrumus.value="";
+        celsiusInput.value="";
+    }
+
+    function swapDivs() {
+        var box1 = document.getElementById('nodecelsius');
+        var box2 = document.getElementById('nodefahrenheit');
+    
+        // Get the parent node of the divs
+        var parent = box1.parentNode;
+    
+        // Get the reference node (the sibling to insert before)
+        var refNode = box2.nextSibling;
+    
+        // Swap the positions
+        parent.insertBefore(box2, box1);
+        parent.insertBefore(box1, refNode);
+        resetvalue();
+        toggleClass();
+    }
+
+    function toggleClass() {
+        var element = document.getElementById('button_reverse');
+        element.classList.toggle('reversed');
+        toggleDiv("introcelcius");
+        toggleDiv("introfahrenheit");
+        toggleDiv("footerfahrenheit");
+        toggleDiv("footercelcius");
+    }
+
+    function perhitungan() {
+        var element = document.getElementById('button_reverse');
+        if (element.classList.contains('reversed')) {
+            convertToCelcius();
+        } else {
+            convertToFahrenheit();
+        }
+    }
+
+    function toggleDiv(variable) {
+        var div = document.getElementById(variable);
+        if (div.style.display === 'none') {
+            div.style.display = 'block'; // Show the div
+        } else {
+            div.style.display = 'none'; // Hide the div
+        }
+    }
+
+</script>
+
+</body>
+</html>
